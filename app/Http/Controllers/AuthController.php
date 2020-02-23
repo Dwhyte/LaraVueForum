@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('JWT', ['except' => ['login', 'register']]);
+        $this->middleware('JWT', ['except' => ['login', 'signup']]);
     }
 
 
@@ -49,12 +49,12 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register(Request $request)
+    public function signup(Request $request)
     {
-            $credentials = $request->only('first_name', 'last_name', 'email', 'password', 'avatar');
+            $credentials = $request->only('username','email', 'password', 'avatar');
 
             $validator = Validator::make($credentials, [
-                'first_name' => 'required',
+                'username' => 'required|min:4|max:10|unique:users',
                 'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|min:6'
             ]);
@@ -90,5 +90,41 @@ class AuthController extends Controller
 
             $token = JWTAuth::fromUser($user);
             return response()->json(compact('token'));
+    }
+
+
+
+    /**
+     * Get the authenticated User.
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function authUser(Request $request)
+    {
+        $user = $request->user();
+        $avatar = $user->avatar ? ''.env('CLOUDINARY_FULL_AVATAR_PATH').''.$user->avatar .'' : null;
+
+        return response()->json([
+            'id' => $user->id,
+            'role' => $user->getRoleNames()[0],
+            'username' => $user->username,
+            'email' => $user->email,
+            'avatar' => $avatar,
+            'description' => $user->description,
+            'color' => $user->rand_color,
+            'savedThreads' => $user->SavedThreads
+        ], 200);
+    }
+
+
+
+
+    /**
+     * Log the user out (Invalidate the token).
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout()
+    {
+        auth()->logout();
+        return response()->json(['msg' => 'Successfully logged out']);
     }
 }
