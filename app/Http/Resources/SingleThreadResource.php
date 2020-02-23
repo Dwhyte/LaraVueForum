@@ -2,12 +2,11 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Str;
+use Illuminate\Support\Carbon;
 use Mtownsend\ReadTime\ReadTime;
 
-class ThreadResource extends JsonResource
+class SingleThreadResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,27 +16,22 @@ class ThreadResource extends JsonResource
      */
     public function toArray($request)
     {
-        $time = Carbon::now()->subHour(24);
-        $thread_date = Carbon::parse($this->created_at);
-
-        // check if thread date is more than 24 hours old. set $is_thread_new to false.
-        $is_thread_new = $thread_date <= $time ? false : true;
-
-        $skimmed_content = Str::limit($this->content, 35, '...'); // show 35 characters only
         $read_time = (new ReadTime($this->content))->get();
+        $featured_image = $this->featured_image ? ''.env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH').''.$this->featured_image .'' : null;
 
         return [
             'id' => $this->id,
             'user' => $this->User->username,
             'user_id' => $this->User->id,
-            'category' => $this->Category->name,
+            'category' => $this->Category,
+            'read_time' => $read_time,
             'title' => $this->title,
             'slug' => $this->slug,
-            'skimmed_content' => $skimmed_content,
-            'read_time' => $read_time,
-            'likes' => $this->Likes->count(),
-            'replies' => $this->Replies->count(),
-            "isNew" => $is_thread_new,
+            'featured_image' => $featured_image,
+            'content' => $this->content,
+            'like_count' => $this->Likes->count(),
+            'reply_count' => $this->Replies->count(),
+            'replies' => ReplyResource::collection($this->Replies),
             'thread_created_on' => Carbon::parse($this->created_at)->format('M d'),
             'thread_updated_on' => $this->updated_at->diffForHumans()
         ];

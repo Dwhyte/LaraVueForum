@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Thread extends Model
 {
     protected $table = "threads";
-    protected $fillable = ["user_id", "cat_id", "slug", "title", "content", "featured_image", "isDrafted"];
+    protected $fillable = ["user_id", "cat_id", "username", "slug", "title", "content", "featured_image", "isDrafted"];
     protected $with = ['replies'];
 
 
@@ -31,7 +31,7 @@ class Thread extends Model
 
     public function getPathAttribute()
     {
-        return "/thread/$this->slug";
+        return "/thread/$this->username/$this->slug";
     }
 
 

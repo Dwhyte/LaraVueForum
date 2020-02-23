@@ -9,6 +9,7 @@ use JD\Cloudder\Facades\Cloudder;
 use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
 {
@@ -35,13 +36,13 @@ class AuthController extends Controller
         try {
             $token = JWTAuth::attempt($credentials);
             if(!$token) {
-                return response()->json(['msg' => 'Invalid Credentials'], 401);
+                return response()->json(['msg' => 'Invalid Credentials'], Response::HTTP_UNAUTHORIZED);
             }
         } catch (JWTException $e) {
-            return response()->json(['msg' => 'System Error - please contact admin/help support.'], 500);
+            return response()->json(['msg' => 'System Error - please contact admin/help support.'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        return response()->json(compact('token'), 200);
+        return response()->json(compact('token'), Response::HTTP_OK);
     }
 
     /**
@@ -60,7 +61,7 @@ class AuthController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return response()->json($validator->errors(), 422);
+                return response()->json($validator->errors(), Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             // upload new avatar image
@@ -89,7 +90,7 @@ class AuthController extends Controller
             $user->assignRole($memberRoleToAssign);
 
             $token = JWTAuth::fromUser($user);
-            return response()->json(compact('token'));
+            return response()->json(compact('token'), Response::HTTP_OK);
     }
 
 
@@ -112,7 +113,7 @@ class AuthController extends Controller
             'description' => $user->description,
             'color' => $user->rand_color,
             'savedThreads' => $user->SavedThreads
-        ], 200);
+        ], Response::HTTP_OK);
     }
 
 
@@ -125,6 +126,6 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-        return response()->json(['msg' => 'Successfully logged out']);
+        return response()->json(['msg' => 'Successfully logged out'], Response::HTTP_OK);
     }
 }
