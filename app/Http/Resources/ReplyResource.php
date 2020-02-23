@@ -24,7 +24,8 @@ class ReplyResource extends JsonResource
             'user_avatar' => $avatar,
             'thread_slug' => $this->Thread->slug,
             'like_count' => $this->Likes->count(),
-            'Likes' => !!$this->Likes->where('user_id', auth()->id())->count(),
+            'Liked' => !!$this->Likes->where('user_id', auth()->id())->count(),
+            'replies' => ReplyResource::collection($this->Comments),
             'created_at' => $this->created_at->diffForHumans()
         ];
     }

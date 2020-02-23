@@ -2,9 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d819c090-6070-401c-93fa-248aae7bce89" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/LaraVueForum.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/LaraVueForum.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ThreadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ThreadController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/seeds/DatabaseSeeder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/ReplyResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/ReplyResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Resources/SingleThreadResource.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Resources/SingleThreadResource.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Category.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Category.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Like.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Like.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Replies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Replies.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/SaveThread.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/SaveThread.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Models/Thread.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Models/Thread.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/migrations/2020_02_21_234219_create_replies_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_02_21_234219_create_replies_table.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -119,6 +130,9 @@
       <path value="$PROJECT_DIR$/vendor/cloudinary/cloudinary_php" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-permission" />
       <path value="$PROJECT_DIR$/vendor/mtownsend/read-time" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
     </include_path>
   </component>
   <component name="ProjectId" id="1Y8L181vbBVWLsFYR0azPQmRk7a" />
@@ -154,7 +168,7 @@
       <updated>1582319056785</updated>
       <workItem from="1582319059695" duration="6463000" />
       <workItem from="1582423987304" duration="8487000" />
-      <workItem from="1582459904604" duration="10191000" />
+      <workItem from="1582459904604" duration="22539000" />
     </task>
     <servers />
   </component>
@@ -162,9 +176,9 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1582471041619">
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1582498014098">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1582471041619" />
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1582498014098" />
   </component>
 </project>

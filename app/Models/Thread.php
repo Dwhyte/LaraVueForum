@@ -39,16 +39,21 @@ class Thread extends Model
 
     public function User()
     {
-        $this->belongsTo(User::class, 'user_id');
+       return $this->belongsTo(User::class, 'user_id');
     }
 
     public function Category()
     {
-        $this->belongsTo(Category::class, 'cat_id');
+      return $this->belongsTo(Category::class, 'cat_id');
     }
 
     public function Replies()
     {
-        $this->hasMany(Replies::class)->latest();
+       return $this->hasMany(Replies::class)->latest()->whereNull('parent_id');
+    }
+
+    public function Likes()
+    {
+       return $this->hasMany(Like::class);
     }
 }

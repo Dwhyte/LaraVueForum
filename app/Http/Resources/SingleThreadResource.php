@@ -18,12 +18,20 @@ class SingleThreadResource extends JsonResource
     {
         $read_time = (new ReadTime($this->content))->get();
         $featured_image = $this->featured_image ? ''.env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH').''.$this->featured_image .'' : null;
+        $category = [
+            'id' => $this->Category->id,
+            'name' => $this->Category->name,
+            'color' => $this->Category->color
+        ];
+
+//        printf($this->Replies[0]);
+//        exit();
 
         return [
             'id' => $this->id,
             'user' => $this->User->username,
             'user_id' => $this->User->id,
-            'category' => $this->Category,
+            'category' => $category,
             'read_time' => $read_time,
             'title' => $this->title,
             'slug' => $this->slug,

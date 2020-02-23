@@ -33,10 +33,20 @@ Route::group([
 
 
 Route::group(['prefix' => 'thread'], function () {
-    Route::get('{cat}', 'ThreadController@getAllThreads');
+    Route::post('all', 'ThreadController@getAllThreads');
     Route::get('{username}/{slug}', 'ThreadController@getSingleThread');
     Route::post('create', 'ThreadController@createThread');
 //    Route::get('mine', 'ThreadController@AuthUserThreads');
     Route::post('save', 'ThreadController@saveThread');
     Route::post('remove', 'ThreadController@removeThread');
+});
+
+
+Route::post('likeIt', 'LikeController@likeIt');
+Route::delete('unlikeIt', 'LikeController@unLikeIt');
+
+
+Route::group(['prefix' => 'reply'], function () {
+   Route::post('add', 'ReplyController@createReply');
+   Route::post('remove', 'ReplyController@removeReply');
 });

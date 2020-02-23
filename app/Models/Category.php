@@ -14,6 +14,6 @@ class Category extends Model
 
     public function Threads()
     {
-        $this->hasMany(Thread::class, 'cat_id');
+      return $this->hasMany(Thread::class, 'cat_id');
     }
 }

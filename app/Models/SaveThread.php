@@ -15,13 +15,13 @@ class SaveThread extends Model
 
     public function User()
     {
-        $this->belongsTo(User::class, 'user_id');
+      return $this->belongsTo(User::class, 'user_id');
     }
 
 
     public function Thread()
     {
-        $this->belongsTo(Thread::class, 'thread_id');
+       return $this->belongsTo(Thread::class, 'thread_id');
     }
 
 

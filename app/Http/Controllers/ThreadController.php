@@ -24,19 +24,28 @@ class ThreadController extends Controller
      * @param $category
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getAllThreads($category)
+    public function getAllThreads(Request $request)
     {
         try {
-            $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
-                ->orWhere('cat_id', $category)
-                ->where('isDraft', 0)
-                ->latest()
-                ->paginate(15);
 
+            if($request->category === 'ALL') {
+                $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
+                    ->where('isDraft', 0)
+                    ->latest()
+                    ->paginate(15);
+
+            } else {
+                $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
+                        ->where('cat_id', $request->category)
+                        ->where('isDraft', 0)
+                        ->latest()
+                        ->paginate(15);
+            }
             return ThreadResource::collection($threads);
 
         } catch (\Exception $e) {
             return response()->json(['msg' => 'No Threads.'], Response::HTTP_NOT_FOUND);
+//            return response()->json(['msg' => $e], Response::HTTP_NOT_FOUND);
         }
     }
 
@@ -50,7 +59,7 @@ class ThreadController extends Controller
     public function getSingleThread($username, $slug)
     {
         try {
-            $thread = Thread::with(['User', 'Category', 'Replies'])
+            $thread = Thread::with(['User', 'Category', 'Replies', 'Replies.Comments'])
                 ->where('username', $username)
                 ->where('slug', $slug)
                 ->where('isDraft', 0)

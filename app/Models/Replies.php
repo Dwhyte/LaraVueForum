@@ -8,14 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Replies extends Model
 {
     protected $table = "replies";
-    protected $fillable = ['user_id', 'thread_id', 'user_parent_id', 'body'];
+    protected $fillable = ['user_id', 'thread_id', 'parent_id', 'body'];
 
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function($reply){
-            $reply->user_id = auth()->id;
+            $reply->user_id = auth()->user()->id;
         });
     }
 
@@ -24,16 +24,21 @@ class Replies extends Model
 
     public function User()
     {
-        $this->belongsTo(User::class, 'user_id');
+       return $this->belongsTo(User::class, 'user_id');
     }
 
     public function Thread()
     {
-        $this->belongsTo(Thread::class, 'thread_id');
+       return $this->belongsTo(Thread::class, 'thread_id');
     }
 
     public function Likes()
     {
-        $this->hasMany(Like::class);
+       return $this->hasMany(Like::class, 'reply_id');
+    }
+
+    public function Comments()
+    {
+        return $this->hasMany(Replies::class, 'parent_id');
     }
 }
