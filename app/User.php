@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\Thread;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,7 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'username', 'email', 'password', 'rand_color', 'avatar', 'description'
     ];
 
     /**
@@ -56,5 +57,12 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    // Relationships
+
+    public function Threads()
+    {
+        $this->hasMany(Thread::class);
     }
 }
