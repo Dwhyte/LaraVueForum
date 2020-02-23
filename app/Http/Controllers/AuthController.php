@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('JWT', ['except' => ['login', 'register']]);
     }
 
 
@@ -38,7 +38,7 @@ class AuthController extends Controller
                 return response()->json(['msg' => 'Invalid Credentials'], 401);
             }
         } catch (JWTException $e) {
-            return response()->json(['msg' => 'Could not create token'], 500);
+            return response()->json(['msg' => 'System Error - please contact admin/help support.'], 500);
         }
 
         return response()->json(compact('token'), 200);
