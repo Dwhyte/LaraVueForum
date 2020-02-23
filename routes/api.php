@@ -30,3 +30,13 @@ Route::group([
     Route::post('refresh', 'AuthController@refresh');
     Route::post('me', 'AuthController@authUser');
 });
+
+
+Route::group(['prefix' => 'thread'], function () {
+    Route::get('{cat}', 'ThreadController@getAllThreads');
+    Route::get('{username}/{slug}', 'ThreadController@getSingleThread');
+    Route::post('create', 'ThreadController@createThread');
+//    Route::get('mine', 'ThreadController@AuthUserThreads');
+    Route::post('save', 'ThreadController@saveThread');
+    Route::post('remove', 'ThreadController@removeThread');
+});
