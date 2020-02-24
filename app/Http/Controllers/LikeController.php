@@ -24,8 +24,8 @@ class LikeController extends Controller
     {
         // check if user has already saved this thread
         $check = Like::where('user_id', $request->user()->id)
-            ->orWhere('thread_id', $request->thread_id)
-            ->orWhere('reply_id', $request->reply_id)
+            ->where('thread_id', $request->thread_id)
+            ->where('reply_id', $request->reply_id)
             ->get();
 
         if($check->isEmpty()) {
