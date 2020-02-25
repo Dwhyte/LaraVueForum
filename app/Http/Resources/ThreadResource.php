@@ -31,6 +31,7 @@ class ThreadResource extends JsonResource
             'user' => $this->User->username,
             'user_id' => $this->User->id,
             'category' => $this->Category->name,
+            'category_color' => $this->Category->color,
             'title' => $this->title,
             'slug' => $this->slug,
             'skimmed_content' => $skimmed_content,

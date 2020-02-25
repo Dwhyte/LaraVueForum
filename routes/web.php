@@ -11,10 +11,4 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-Route::get('/{any}', function () {
-    return view('home');
-})->where('any', '.*');
+Route::get('/{any}', 'SpaController@index')->where('any', '.*');

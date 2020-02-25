@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d819c090-6070-401c-93fa-248aae7bce89" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/LikeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/LikeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ReplyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ReplyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ThreadController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ThreadController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/Inc/TheNavigation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Inc/TheNavigation.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +17,13 @@
     <execution>
       <executable />
     </execution>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Vue Single File Component" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -123,7 +132,9 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1Y8L181vbBVWLsFYR0azPQmRk7a" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -155,7 +166,8 @@
       <updated>1582319056785</updated>
       <workItem from="1582319059695" duration="6463000" />
       <workItem from="1582423987304" duration="8487000" />
-      <workItem from="1582459904604" duration="24028000" />
+      <workItem from="1582459904604" duration="24172000" />
+      <workItem from="1582565830971" duration="4321000" />
     </task>
     <servers />
   </component>
@@ -163,9 +175,9 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1582498014098">
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup" timestamp="1582570341500">
       <screen x="0" y="23" width="1920" height="1057" />
     </state>
-    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1582498014098" />
+    <state x="625" y="258" width="670" height="676" key="search.everywhere.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1582570341499" />
   </component>
 </project>

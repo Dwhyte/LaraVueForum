@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SingleThreadResource;
 use App\Http\Resources\ThreadResource;
+use App\Models\SaveThread;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use JD\Cloudder\Facades\Cloudder;
@@ -24,11 +25,11 @@ class ThreadController extends Controller
      * @param $category
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getAllThreads(Request $request)
+    public function getAllThreads($category)
     {
         try {
 
-            if($request->category === 'ALL') {
+            if($category === 'all') {
                 $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
                     ->where('isDraft', 0)
                     ->latest()
@@ -36,7 +37,7 @@ class ThreadController extends Controller
 
             } else {
                 $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
-                        ->where('cat_id', $request->category)
+                        ->where('cat_id', $category)
                         ->where('isDraft', 0)
                         ->latest()
                         ->paginate(15);
@@ -159,10 +160,42 @@ class ThreadController extends Controller
             ->where('user_id', $userID)
             ->count();
 
-        if ($similarThreadCount > 0) {
-            return true;
-        }
+        return $similarThreadCount > 0 ? true : false;
+
     }
+
+
+    /**
+     * Save a thread or remove
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function saveThread(Request $request)
+    {
+        $user = auth()->user();
+        $threadID = $request->thread_id;
+
+        // check if user has already saved this thread
+        $check = SaveThread::where('user_id', $user->id)
+            ->where('thread_id', $threadID)
+            ->get();
+
+        if($check->isEmpty()) {
+            $newSave = new SaveThread;
+            $newSave->user_id = $user->id;
+            $newSave->thread_id = $threadID;
+            $newSave->save();
+
+            return response()->json(['success' => true, 'data' => $newSave], Response::HTTP_OK);
+        } else {
+            $check->each->delete();
+            return response()->json(['success' => true, "msg" => "removed."], Response::HTTP_OK);
+        }
+
+    }
+
+
+
 
 
 }
