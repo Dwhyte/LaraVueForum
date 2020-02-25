@@ -46,7 +46,7 @@
                                                 }})</span
                                             >
                                         </span>
-                                        <div>
+                                        <div style="margin-top: 8px;">
                                             <i
                                                 class="fas fa-heart"
                                                 style="color: #ec4141;"
@@ -77,13 +77,13 @@
                                 </div>
 
                                 <div class="bottom" style="width:100%">
-                                    <ThreadHeartsComponent
+                                    <ThreadSaveBtn
                                         v-if="user"
                                         :saved-threads="user.savedThreads"
                                         :thread-i-d="thread.id"
-                                    ></ThreadHeartsComponent>
+                                    ></ThreadSaveBtn>
                                     <router-link
-                                        v-if="user"
+                                        v-if="!user"
                                         to="/signin"
                                         style="float:right"
                                     >
@@ -93,14 +93,6 @@
                                             Save
                                         </button>
                                     </router-link>
-                                    <button
-                                        v-if="!user"
-                                        style="float:right"
-                                        v-on:click="saveThread(thread.id)"
-                                        class="small mb-2 btn btn-link thread-save-btn btn-sm text-uppercase font-weight-bold"
-                                    >
-                                        Save
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -117,12 +109,12 @@
 // import ThreadDisplayPlaceholder from "./ThreadDisplayPlaceholder";
 // import { ContentLoader } from "vue-content-loader";
 import { mapGetters, mapActions } from "vuex";
-import ThreadHeartsComponent from "../../components/Threads/ThreadHeartsComponent";
+import ThreadSaveBtn from "@/components/Threads/ThreadSaveBtn";
 import AvatarIcon from "@/components/AvatarIcon";
 export default {
     // props: ["threads"],
     components: {
-        ThreadHeartsComponent,
+        ThreadSaveBtn,
         AvatarIcon
     },
     data() {

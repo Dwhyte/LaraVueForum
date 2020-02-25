@@ -134,7 +134,7 @@ a:hover {
 }
 
 .btn-green:hover {
-    background-color: transparent;
+    background-color: #8ace7f;
     border: #42b52e 2px solid;
     text-decoration: none;
 }
@@ -302,15 +302,15 @@ a:hover {
     text-align: center;
 }
 
-#auth-view input {
+/* #auth-view input {
     background-color: transparent;
     padding: 11px;
     border: 1px solid #dbdbdb;
     border-radius: 2px;
     box-sizing: border-box;
-}
+} */
 
-#auth-view button,
+/* #auth-view button,
 #auth-view input[type="text"],
 #auth-view input[type="email"],
 #auth-view input[type="password"],
@@ -322,6 +322,33 @@ a:hover {
     font-weight: 300;
     -webkit-appearance: none;
     height: 48px;
+} */
+
+#auth-view input {
+    color: #130d27;
+    font-size: 1.55rem;
+    display: block;
+    border: 0;
+    border-bottom: 3px solid #7484d0;
+    background-color: transparent;
+    width: 100%;
+    min-height: 3rem;
+    padding: 0;
+}
+
+#auth-view label {
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    line-height: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #45495f;
+    margin: 0 0 4px 0;
+    padding: 0;
+}
+
+#auth-view .form-control:focus {
+    box-shadow: none;
 }
 
 #auth-view .question {

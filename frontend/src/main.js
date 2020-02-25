@@ -9,6 +9,8 @@ import Meta from "vue-meta";
 import VueFlashMessage from "vue-flash-message";
 require("vue-flash-message/dist/vue-flash-message.min.css");
 
+import CKEditor from "@ckeditor/ckeditor5-vue";
+
 Vue.config.productionTip = false;
 
 require("@/store/subscriber");
@@ -25,6 +27,7 @@ Vue.use(require("vue-moment"));
 Vue.use(Meta);
 Vue.use(VueAxios, axios);
 Vue.use(VueFlashMessage);
+Vue.use(CKEditor);
 
 // const vueBodyClass = new vbclass(router);
 // router.beforeEach((to, from, next) => {

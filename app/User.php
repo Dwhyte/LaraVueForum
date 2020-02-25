@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\SaveThread;
 use App\Models\Thread;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,6 +66,11 @@ class User extends Authenticatable implements JWTSubject
 
     public function Threads()
     {
-        $this->hasMany(Thread::class);
+      return  $this->hasMany(Thread::class);
+    }
+
+    public function SavedThreads()
+    {
+       return $this->hasMany(SaveThread::class);
     }
 }

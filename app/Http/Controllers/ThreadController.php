@@ -188,10 +188,28 @@ class ThreadController extends Controller
 
             return response()->json(['success' => true, 'data' => $newSave], Response::HTTP_OK);
         } else {
-            $check->each->delete();
-            return response()->json(['success' => true, "msg" => "removed."], Response::HTTP_OK);
+            return response()->json(['success' => true, "msg" => "this was already saved."], Response::HTTP_OK);
         }
 
+    }
+
+
+    /**
+     * Remove Saved Thread
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function removeThread(Request $request)
+    {
+        $user = auth()->user();
+        $threadID = $request->thread_id;
+
+        $thread = SaveThread::where('user_id', $user->id)
+            ->where('thread_id', $threadID)
+            ->get();
+
+        $thread->each->delete();
+        return response()->json('Successfully removed.');
     }
 
 

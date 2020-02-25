@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SaveThreadResource;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -112,7 +113,7 @@ class AuthController extends Controller
             'avatar' => $avatar,
             'description' => $user->description,
             'color' => $user->rand_color,
-            'savedThreads' => $user->SavedThreads
+            'savedThreads' => SaveThreadResource::collection($user->SavedThreads)
         ], Response::HTTP_OK);
     }
 
