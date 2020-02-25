@@ -14,6 +14,14 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+
+        $avatar = $this->avatar ? ''.env('CLOUDINARY_FULL_AVATAR_PATH').''.$this->avatar .'' : null;
+
+        return [
+            'id' => $this->id,
+            'username' => $this->username,
+            'color' => $this->rand_color,
+            'avatar' => $avatar
+        ];
     }
 }

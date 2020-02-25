@@ -24,9 +24,6 @@ class SingleThreadResource extends JsonResource
             'color' => $this->Category->color
         ];
 
-//        printf($this->Replies[0]);
-//        exit();
-
         return [
             'id' => $this->id,
             'user' => $this->User->username,
