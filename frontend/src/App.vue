@@ -1,11 +1,11 @@
 <template>
     <div id="app">
-        <TheNavigation />
+        <TheNavigation :user="user" :is-auth="isAuth" />
         <router-view />
     </div>
 </template>
 <script>
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import TheNavigation from "@/components/Inc/TheNavigation";
 export default {
     name: "AppHome",
@@ -23,6 +23,12 @@ export default {
     },
     watch: {
         // $route: "getCats"
+    },
+    computed: {
+        ...mapGetters({
+            isAuth: "auth/authenticated",
+            user: "auth/user"
+        })
     },
     methods: {
         ...mapActions({

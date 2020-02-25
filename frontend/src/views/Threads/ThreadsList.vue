@@ -83,16 +83,24 @@
                                         :thread-i-d="thread.id"
                                     ></ThreadHeartsComponent>
                                     <router-link
+                                        v-if="user"
                                         to="/signin"
                                         style="float:right"
                                     >
                                         <button
-                                            v-if="!user"
                                             class="small mb-2 btn btn-link thread-save-btn btn-sm text-uppercase font-weight-bold"
                                         >
                                             Save
                                         </button>
                                     </router-link>
+                                    <button
+                                        v-if="!user"
+                                        style="float:right"
+                                        v-on:click="saveThread(thread.id)"
+                                        class="small mb-2 btn btn-link thread-save-btn btn-sm text-uppercase font-weight-bold"
+                                    >
+                                        Save
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -141,6 +149,17 @@ export default {
         }),
         allThreads() {
             this.getAllThreads(this.$route.params.category);
+        },
+        saveThread(threadID) {
+            this.axios
+                .post("/api/thread/save", {
+                    thread_id: threadID
+                })
+                .then(res => {
+                    console.log(res);
+                    this.allThreads();
+                })
+                .catch(err => console.log(err));
         }
     }
 };

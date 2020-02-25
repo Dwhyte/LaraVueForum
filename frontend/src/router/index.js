@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import VueBodyClass from "vue-body-class";
 import NotFound from "@/views/NotFound.vue";
 import SignIn from "../views/Auth/SignIn.vue";
 import Register from "../views/Auth/Register.vue";
@@ -75,6 +76,11 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     linkActiveClass: "active",
     routes
+});
+
+const vueBodyClass = new VueBodyClass(routes);
+router.beforeEach((to, from, next) => {
+    vueBodyClass.guard(to, next);
 });
 
 export default router;

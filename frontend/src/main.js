@@ -5,7 +5,6 @@ import store from "./store";
 import NProgress from "nprogress";
 import axios from "axios";
 import VueAxios from "vue-axios";
-// import vbclass from "vue-body-class";
 import Meta from "vue-meta";
 import VueFlashMessage from "vue-flash-message";
 require("vue-flash-message/dist/vue-flash-message.min.css");

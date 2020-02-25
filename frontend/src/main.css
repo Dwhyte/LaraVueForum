@@ -149,13 +149,13 @@ a:hover {
     color: #ffffff;
 }
 
-.container {
+/* .container {
     width: 80%;
     max-width: 1250px;
     margin: 0 auto;
     margin-top: 2rem;
     padding-bottom: 2rem;
-}
+} */
 
 .avatar-circle {
     width: 36px;
