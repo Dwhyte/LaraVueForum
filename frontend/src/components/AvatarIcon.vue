@@ -1,7 +1,8 @@
 <template>
     <div class="avatar_icon_header">
         <div
-            class="avatar_icon__icon avatar_icon__icon--small picture_circle"
+            class="avatar_icon__icon picture_circle"
+            :class="className"
             :style="{
                 'background-color': user.color,
                 'background-image': avatarUrl,
@@ -14,7 +15,7 @@
 <script>
 export default {
     name: "AvatarIcon",
-    props: ["user"],
+    props: ["user", "className"],
     data() {
         return {
             userData: null
@@ -48,13 +49,6 @@ export default {
 </script>
 
 <style>
-.avatar_icon_icon--small {
-    height: 2.5rem;
-    width: 2.5rem;
-    font-size: 1.75rem;
-    line-height: 2.5rem;
-}
-
 .avatar_icon__icon {
     height: 3rem;
     width: 3rem;
@@ -67,6 +61,19 @@ export default {
     border-radius: 100%;
     background-color: #bdbdbd;
     color: #fff;
+}
+.avatar_icon__icon--small {
+    height: 2.2rem;
+    width: 2.2rem;
+    font-size: 1.75rem;
+    line-height: 2.5rem;
+}
+
+.avatar_icon__icon--medium {
+    height: 2.2rem;
+    width: 2.5rem;
+    font-size: 1.75rem;
+    line-height: 2.5rem;
 }
 
 .avatar_icon__icon {

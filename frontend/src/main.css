@@ -149,13 +149,60 @@ a:hover {
     color: #ffffff;
 }
 
-/* .container {
-    width: 80%;
-    max-width: 1250px;
-    margin: 0 auto;
-    margin-top: 2rem;
-    padding-bottom: 2rem;
-} */
+.btn-grey {
+    background-color: #6b93a7;
+    border: 2px solid #6b93a7;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.btn-grey:hover {
+    background-color: #88aec1;
+}
+
+.btn-red {
+    color: #fff !important;
+    background-color: #e91e63;
+    border: 2px solid #e91e63;
+    text-decoration: none;
+}
+
+.btn-red:hover {
+    background-color: #da5683;
+}
+
+.btn-blue {
+    color: #fff !important;
+    border: 2px solid #536eec;
+    background-color: #536eec;
+    text-decoration: none;
+}
+
+.btn-blue:hover {
+    background-color: #8c9ce8;
+}
+
+.btn-darkgrey {
+    color: #fff !important;
+    border: 2px solid #434654;
+    background-color: #828592;
+    text-decoration: none;
+}
+
+.btn-darkgrey:hover {
+}
+
+.btn-normy {
+    color: #34495d !important;
+    border: 2px solid #585858;
+    background-color: #fafafa;
+    text-decoration: none;
+}
+
+.btn-normy:hover {
+    background-color: #8c8d90;
+    color: #fff !important;
+}
 
 .avatar-circle {
     width: 36px;
@@ -270,7 +317,7 @@ a:hover {
 }
 
 .forum-nav {
-    height: 48px;
+    /* height: 48px; */
     background: #fff;
     -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.08);
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.08);

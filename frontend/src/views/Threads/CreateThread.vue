@@ -22,11 +22,15 @@
                                     <select
                                         v-if="catData"
                                         v-model="selectedCategory"
-                                        @change="onChange($event)"
                                         class="custom-select mr-sm-2"
                                         id="inlineFormCustomSelect"
                                     >
-                                        <!-- <option selected>Select a category</option> -->
+                                        <option
+                                            selected
+                                            disabled
+                                            value="Select a category"
+                                            >Select a category</option
+                                        >
                                         <option
                                             v-for="category in catData.data"
                                             :key="category.id"
@@ -63,7 +67,7 @@
                                 <div class="col-sm-3 my-1">
                                     <label for="addfeaturedImage" class="mt-2">
                                         <a
-                                            class="btn btn-sm btn-outline-claim font-weight-bold"
+                                            class="btn btn-sm btn-blue font-weight-bold"
                                             >Add Featured Image</a
                                         >
                                     </label>
@@ -83,17 +87,25 @@
                         :config="editorConfig"
                     ></ckeditor>
                     <div class="save-area">
-                        <a
-                            @click="createNewPost"
-                            class="btn btn-sm btn-outline-save font-weight-bold mt-3"
-                            >Upload Thread</a
-                        >
-                        <a
-                            @click="clearEditPost"
-                            style="float: right;"
-                            class="btn btn-sm btn-danger-outline font-weight-bold mt-3"
-                            >Clear</a
-                        >
+                        <div style="display: inline-block;">
+                            <a
+                                @click="clearEditPost"
+                                class="btn btn-sm btn-red font-weight-bold mt-3"
+                                >Clear</a
+                            >
+                        </div>
+                        <div style="float: right;">
+                            <a
+                                @click="createNewPost"
+                                class="btn btn-sm btn-grey font-weight-bold mt-3 mr-3"
+                                >Save as draft</a
+                            >
+                            <a
+                                @click="createNewPost"
+                                class="btn btn-sm btn-green font-weight-bold mt-3"
+                                >Publish Thread</a
+                            >
+                        </div>
                     </div>
                 </div>
             </div>
@@ -108,8 +120,7 @@ export default {
     data() {
         return {
             title: null,
-            selectedCategory: null,
-            categoryDropdownText: "Select a category",
+            selectedCategory: "Select a category",
             isDraft: 0,
             errors: null,
             editor: ClassicEditor,
@@ -134,9 +145,6 @@ export default {
         ...mapActions({
             getCats: "GetCategories"
         }),
-        // onChange(event) {
-        //   // console.log(event.target.value);
-        // },
         createNewPost() {
             this.axios
                 .post("/api/thread/create", {
@@ -157,10 +165,12 @@ export default {
         },
 
         clearEditPost() {
-            this.title = null;
-            this.selectedCategory = "Select a category";
-            this.editorData = null;
-            this.isDraft = 0;
+            if (confirm("Do you really want to erase all of your content?")) {
+                this.title = null;
+                this.selectedCategory = "Select a category";
+                this.editorData = "";
+                this.isDraft = 0;
+            }
         }
     }
 };

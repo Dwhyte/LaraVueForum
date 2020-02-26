@@ -42,81 +42,43 @@
                             <a class="nav-link">Register</a>
                         </router-link>
                         <router-link
-                            v-if="isAuth"
-                            to="/thread/new"
-                            class="btn btn-sm btn-outline-claim font-weight-bold text-uppercase mr-5"
-                            style="height: 32px;margin-top: 6px;"
-                            >Write A Post</router-link
+                            v-if="isAuth && user.role === 'Member'"
+                            :to="`/u/${user.username}/settings`"
                         >
-                        <li
+                            <button
+                                class="btn btn-sm btn-normy font-weight-bold text-uppercase mr-3"
+                            >
+                                Admin Settings
+                            </button>
+                        </router-link>
+                        <router-link
                             v-if="isAuth"
-                            style="height: 32px;margin-top: 10px;"
+                            :to="`/u/${user.username}/settings`"
                         >
+                            <button
+                                class="btn btn-sm btn-normy font-weight-bold text-uppercase mr-3"
+                            >
+                                Settings
+                            </button>
+                        </router-link>
+                        <button
+                            style="height: 30px;"
+                            v-if="isAuth"
+                            @click.prevent="signOut"
+                            class="btn btn-sm btn-normy font-weight-bold text-uppercase mr-5"
+                        >
+                            Log out
+                        </button>
+                        <li v-if="isAuth" style="height: 32px;margin-top: 6px;">
                             <span class="name font-weight-bold"
                                 >Hello, {{ user.username }}</span
                             >
                         </li>
-                        <li v-if="isAuth" class="nav-item dropdown">
-                            <a
-                                class="nav-link dropdown-toggle"
-                                href="#"
-                                id="dropdown01"
-                                data-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-expanded="false"
-                            >
-                                <!--                <img-->
-                                <!--                  v-if="isAuth && !user.picture"-->
-                                <!--                  class="avatar"-->
-                                <!--                  :src="`${require(`@/assets/default_avatar.png`)}`"-->
-                                <!--                />-->
-                                <div
-                                    v-if="isAuth && !user.picture"
-                                    class="avatar-circle"
-                                    v-bind:style="{
-                                        color: `#000`,
-                                        backgroundColor: `#${user.color}`
-                                    }"
-                                >
-                                    {{ user.username.charAt(0) }}
-                                </div>
-                                <img
-                                    v-if="isAuth && user.picture"
-                                    class="avatar"
-                                    :src="user.picture"
-                                />
-                            </a>
-                            <div
-                                class="dropdown-menu profile-dropdown"
-                                aria-labelledby="dropdown01"
-                            >
-                                <router-link
-                                    v-if="isAuth"
-                                    :to="`/u/${user.username}`"
-                                    activeClass="active"
-                                    tag="li"
-                                >
-                                    <a class="dropdown-item">Profile</a>
-                                </router-link>
-                                <li>
-                                    <router-link
-                                        :to="`/u/${user.username}/settings`"
-                                    >
-                                        <a class="dropdown-item">Settings</a>
-                                    </router-link>
-                                </li>
-                                <li>
-                                    <button
-                                        v-if="isAuth"
-                                        @click.prevent="signOut"
-                                        type="button"
-                                        class="btn btn-link dropdown-item"
-                                    >
-                                        Logout
-                                    </button>
-                                </li>
-                            </div>
-                        </li>
+                        <AvatarIcon
+                            v-if="isAuth"
+                            :user="user"
+                            :className="`avatar_icon__icon--small`"
+                        ></AvatarIcon>
                     </ul>
                 </div>
             </div>
@@ -125,11 +87,13 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+import AvatarIcon from "@/components/AvatarIcon";
 // import SearchBar from "../inc/SearchBar";
 export default {
     props: ["user", "isAuth"],
     components: {
         // "search-bar": SearchBar
+        AvatarIcon
     },
     methods: {
         singleLetter() {
@@ -139,14 +103,7 @@ export default {
             signOutAction: "auth/signOut"
         }),
         signOut() {
-            this.signOutAction().then(() => {
-                // this.$router.replace({
-                //   name: "landing",
-                //   params: {
-                //     category: "all"
-                //   }
-                // });
-            });
+            this.signOutAction();
         }
     }
 };
@@ -164,5 +121,9 @@ export default {
     position: absolute;
     left: 1px;
     top: 5px;
+}
+
+.btn {
+    font-size: 12px;
 }
 </style>

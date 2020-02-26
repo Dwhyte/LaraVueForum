@@ -110,7 +110,7 @@ export default {
         },
 
         signOut({ commit }) {
-            return axios.post("/api/auth/signout").then(() => {
+            return axios.post("/api/auth/logout").then(() => {
                 commit("SET_TOKEN", null);
                 commit("SET_USER", null);
                 commit("SET_AUTH", false);
