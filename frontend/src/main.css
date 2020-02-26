@@ -204,6 +204,15 @@ a:hover {
     color: #fff !important;
 }
 
+.btn:focus {
+    box-shadow: none;
+}
+
+.router-link-exact-active.active .btn-normy {
+    background-color: #8c8d90;
+    color: #fff !important;
+}
+
 .avatar-circle {
     width: 36px;
     height: 32px;

@@ -88,23 +88,26 @@
                     ></ckeditor>
                     <div class="save-area">
                         <div style="display: inline-block;">
-                            <a
+                            <button
                                 @click="clearEditPost"
                                 class="btn btn-sm btn-red font-weight-bold mt-3"
-                                >Clear</a
                             >
+                                Clear
+                            </button>
                         </div>
                         <div style="float: right;">
-                            <a
-                                @click="createNewPost"
+                            <button
+                                @click="toggleState()"
                                 class="btn btn-sm btn-grey font-weight-bold mt-3 mr-3"
-                                >Save as draft</a
                             >
-                            <a
+                                Save as a draft ?
+                            </button>
+                            <button
                                 @click="createNewPost"
                                 class="btn btn-sm btn-green font-weight-bold mt-3"
-                                >Publish Thread</a
                             >
+                                Publish Post
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -127,7 +130,8 @@ export default {
             editorData: "<p>Write something amazing!</p>",
             editorConfig: {
                 // The configuration of the editor.
-            }
+            },
+            featured_image: null
         };
     },
     mounted() {
@@ -145,13 +149,18 @@ export default {
         ...mapActions({
             getCats: "GetCategories"
         }),
+        toggleState: function() {
+            this.isDraft = !this.isDraft;
+            console.log(this.isDraft);
+        },
         createNewPost() {
             this.axios
                 .post("/api/thread/create", {
                     title: this.title,
-                    threadContent: this.editorData,
+                    thread_content: this.editorData,
                     category: this.selectedCategory,
                     isDraft: this.isDraft
+                    // featured_image: this.featured_image
                 })
                 .then(res => {
                     // this.flashSuccess(res.data.message);

@@ -1,14 +1,16 @@
 <template>
     <div class="avatar_icon_header">
-        <div
-            class="avatar_icon__icon picture_circle"
-            :class="className"
-            :style="{
-                'background-color': user.color,
-                'background-image': avatarUrl,
-                margin: '0 auto'
-            }"
-        ></div>
+        <router-link :to="`/u/${user.username}`" :title="user.username">
+            <div
+                class="avatar_icon__icon picture_circle"
+                :class="className"
+                :style="{
+                    'background-color': user.color,
+                    'background-image': avatarUrl,
+                    margin: '0 auto'
+                }"
+            ></div>
+        </router-link>
     </div>
 </template>
 

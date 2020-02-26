@@ -108,21 +108,22 @@ class ThreadController extends Controller
                     Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            try {
-                // upload new featured image
-                $featured_image_upload = $request->featured_image;
-                Cloudder::upload($featured_image_upload, null, [
-                    'folder' => env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH')
-                ]);
+            // try {
+            //     // upload new featured image
+            //         $featured_image_upload = $request->featured_image;
+            //         Cloudder::upload($featured_image_upload, null, [
+            //             'folder' => env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH')
+            //         ]);
+    
+            //         // get new featured image url from cloudinary api
+            //         $featured_image_url = Cloudder::getPublicId();
+              
 
-                // get new featured image url from cloudinary api
-                $featured_image_url = Cloudder::getPublicId();
-
-            } catch(\Exception $e) {
-                return response()->json(
-                    ['error' => 'Could not upload featured image. Contact Admin/Support.'],
-                    Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
+            // } catch(\Exception $e) {
+            //     return response()->json(
+            //         ['error' => 'Could not upload featured image. Contact Admin/Support.'],
+            //         Response::HTTP_INTERNAL_SERVER_ERROR);
+            // }
 
             // create new thread
             $thread = new Thread;
@@ -132,15 +133,15 @@ class ThreadController extends Controller
             $thread->slug = $slug;
             $thread->title = Str::title($request->title);
             $thread->content = $request->thread_content;
-            $thread->isDraft = $request->is_draft;
-            $thread->featured_image = $featured_image_url;
+            $thread->isDraft = $request->isDraft;
+            // $thread->featured_image = $featured_image_url;
             $thread->save();
 
             return response()->json(['success' => true, "data" => $thread], Response::HTTP_OK);
 
         } catch(\Exception $e) {
             return response()->json(
-                ['error' => 'Something went wrong. Contact Admin.'],
+                ['error' => $e],
                 Response::HTTP_INTERNAL_SERVER_ERROR);
 //            return response()->json(['error' => $e], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

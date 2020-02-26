@@ -42,7 +42,7 @@
                             <a class="nav-link">Register</a>
                         </router-link>
                         <router-link
-                            v-if="isAuth && user.role === 'Member'"
+                            v-if="isAuth && user.role === 'Administrator'"
                             :to="`/u/${user.username}/settings`"
                         >
                             <button
