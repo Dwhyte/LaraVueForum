@@ -26,6 +26,9 @@ class ThreadResource extends JsonResource
         $skimmed_content = Str::limit($this->content, 75, '...'); // show 75 characters only
         $read_time = (new ReadTime($this->content))->get();
 
+        // dd($this->Category);
+        // exit();
+
         return [
             'id' => $this->id,
             'user' => new UserResource($this->User),

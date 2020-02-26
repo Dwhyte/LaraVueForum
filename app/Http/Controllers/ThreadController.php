@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\SingleThreadResource;
 use App\Http\Resources\ThreadResource;
+use App\Models\Category;
 use App\Models\SaveThread;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -25,23 +26,40 @@ class ThreadController extends Controller
      * @param $category
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getAllThreads($category)
+    public function getAllThreads($cat)
     {
         try {
 
-            if($category === 'all') {
-                $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
-                    ->where('isDraft', 0)
-                    ->latest()
-                    ->paginate(15);
+            // $threads = Thread::with(['User', 'Replies', 'likes','Category'])
+            //     ->where('isDraft', 0)
+            //     ->latest()
+            //     ->where(function($q) use ($cat) {
+            //         if($cat !== 'all') {
+            //            $category = $this->getCategory($cat);
+            //            $q->
+            //         }
+            //     })
+
+            if($cat === 'all') {
+                $threads = Thread::with(['User', 'Replies', 'likes','Category'])
+                ->where('isDraft', 0)
+                ->latest()
+                ->paginate(15);
 
             } else {
-                $threads = Thread::with(['User', 'Category', 'Replies', 'Likes'])
-                        ->where('cat_id', $category)
-                        ->where('isDraft', 0)
-                        ->latest()
-                        ->paginate(15);
+
+                $category = Category::where('slug', '=', $cat)->get();
+                if ($category->isEmpty()) {
+                    return response()->json(['success' => false, 'category-slug' => $cat, 'msg' => 'No Threads'], 201);
+                }
+    
+                $threads = Thread::with(['User', 'Replies', 'likes','Category'])
+                ->where('cat_id', $category[0]->id)
+                ->where('isDraft', 0)
+                ->latest()
+                ->paginate(15);
             }
+
             return ThreadResource::collection($threads);
 
         } catch (\Exception $e) {
@@ -85,6 +103,7 @@ class ThreadController extends Controller
             'category' => 'required',
             'title' => 'required',
             'thread_content' => 'required',
+            'featured_image' => 'image|nullable|mimes:jpeg,jpg,png|max:1999',
         ], [
             'category.required' => 'A category selection is required',
             'title.required' => 'Thread title field is required',
@@ -93,8 +112,9 @@ class ThreadController extends Controller
 
         if ($validator->fails()) {
             return response()->json(
-                ['errors' => $validator->errors()],
-                Response::HTTP_UNPROCESSABLE_ENTITY);
+                [
+                    'errors' => $validator->errors()
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         try {
@@ -108,22 +128,7 @@ class ThreadController extends Controller
                     Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
-            // try {
-            //     // upload new featured image
-            //         $featured_image_upload = $request->featured_image;
-            //         Cloudder::upload($featured_image_upload, null, [
-            //             'folder' => env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH')
-            //         ]);
-    
-            //         // get new featured image url from cloudinary api
-            //         $featured_image_url = Cloudder::getPublicId();
-              
-
-            // } catch(\Exception $e) {
-            //     return response()->json(
-            //         ['error' => 'Could not upload featured image. Contact Admin/Support.'],
-            //         Response::HTTP_INTERNAL_SERVER_ERROR);
-            // }
+            $featured_image = $request->featured_image;
 
             // create new thread
             $thread = new Thread;
@@ -134,7 +139,31 @@ class ThreadController extends Controller
             $thread->title = Str::title($request->title);
             $thread->content = $request->thread_content;
             $thread->isDraft = $request->isDraft;
-            // $thread->featured_image = $featured_image_url;
+
+            if($featured_image->isNotEmpty()){
+                try {
+                    // upload new featured image
+                        $featured_image_upload = $featured_image;
+                        Cloudder::upload($featured_image_upload, null, [
+                            'folder' => env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH')
+                        ]);
+        
+                        // get new featured image url from cloudinary api
+                        $featured_image_url = Cloudder::getPublicId();
+
+                        // assign to new thread
+                        $thread->featured_image = $featured_image_url;
+                  
+                } catch(\Exception $e) {
+                    return response()->json(
+                        ['error' => 'Could not upload featured image. Contact Admin/Support.'],
+                        Response::HTTP_INTERNAL_SERVER_ERROR);
+                }
+
+            }
+
+
+            // save new thread!
             $thread->save();
 
             return response()->json(['success' => true, "data" => $thread], Response::HTTP_OK);
@@ -163,6 +192,16 @@ class ThreadController extends Controller
 
         return $similarThreadCount > 0 ? true : false;
 
+    }
+
+
+    private function getCategory($slug)
+    {
+        $category = Category::where('slug', $slug)->get();
+        if ($category->isEmpty()) {
+            return response()->json(['success' => false, 'category-slug' => $slug, 'msg' => 'No Threads'], 201);
+        }
+        return $category;
     }
 
 

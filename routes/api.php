@@ -37,7 +37,7 @@ Route::group(['prefix' => 'categories'], function () {
 
 
 Route::group(['prefix' => 'thread'], function () {
-    Route::get('{category}', 'ThreadController@getAllThreads');
+    Route::get('{cat}', 'ThreadController@getAllThreads');
     Route::get('{username}/{slug}', 'ThreadController@getSingleThread');
     Route::post('create', 'ThreadController@createThread');
 //    Route::get('mine', 'ThreadController@AuthUserThreads');

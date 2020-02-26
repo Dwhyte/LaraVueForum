@@ -625,15 +625,4 @@ span.edit:hover {
   color: #536eec;
   cursor: pointer;
 }
-
-@media (min-width: 992px) {
-  .cat-box {
-    margin-top: 82px;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    right: 0;
-    height: 100%;
-  }
-}
 </style>
