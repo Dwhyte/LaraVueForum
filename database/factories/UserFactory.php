@@ -18,8 +18,12 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+
     return [
-        'name' => $faker->name,
+        'username' => $faker->userName,
+        'rand_color' => $faker->randomElement(['#9EB3C2', '#F39B6D', '#96C5F7', '#34113F', '#7371FC', '#7CDF64', '#A846A0', '#EF5B5B', '#52489C', '#E0DFD5']),
+        'avatar' => null,
+        'description' => $faker->text(500),
         'email' => $faker->unique()->safeEmail,
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
