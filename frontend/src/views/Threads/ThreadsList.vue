@@ -29,7 +29,7 @@
                         style="color: #596671;font-weight: 100;font-size: 11px;"
                       >({{ thread.thread_updated_on }})</span>
                     </span>
-                    <div style="margin-top: 8px;">
+                    <div style="margin-top: 8px;position: absolute;right: 17px;">
                       <i class="fas fa-heart" style="color: #ec4141;" />
                       {{ thread.likes }}
                       <i
@@ -49,7 +49,7 @@
                    }"
                 >#{{ thread.category }}</router-link>
                 <div class="content" style="font-size: 15px;">
-                  <p style="margin: 0;" v-html="thread.skimmed_content"></p>
+                  <p style="margin: 0;" v-html="`${thread.skimmed_content}`"></p>
                 </div>
 
                 <div class="bottom" style="width:100%">
