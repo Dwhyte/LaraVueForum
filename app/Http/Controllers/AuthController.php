@@ -75,7 +75,7 @@ class AuthController extends Controller
             $avatar_url = Cloudder::getPublicId();
 
             // assign a random color
-            $randomColor = ['#9EB3C2', '#F39B6D', '#96C5F7', '#34113F', '#7371FC', '#7CDF64', '#A846A0', '#EF5B5B', '#52489C', '#E0DFD5'];
+            $randomColor = ['#9EB3C2', '#F39B6D', '#96C5F7', '#34113F', '#7371FC', '#7CDF64', '#A846A0', '#EF5B5B', '#52489C', '#429cab'];
             $selectedColor = $randomColor[array_rand($randomColor)];
 
             $user = User::create([

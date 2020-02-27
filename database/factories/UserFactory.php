@@ -21,7 +21,7 @@ $factory->define(User::class, function (Faker $faker) {
 
     return [
         'username' => $faker->userName,
-        'rand_color' => $faker->randomElement(['#9EB3C2', '#F39B6D', '#96C5F7', '#34113F', '#7371FC', '#7CDF64', '#A846A0', '#EF5B5B', '#52489C', '#E0DFD5']),
+        'rand_color' => $faker->randomElement(['#9EB3C2', '#F39B6D', '#96C5F7', '#34113F', '#7371FC', '#7CDF64', '#A846A0', '#EF5B5B', '#52489C', '#429cab']),
         'avatar' => null,
         'description' => $faker->text(500),
         'email' => $faker->unique()->safeEmail,
