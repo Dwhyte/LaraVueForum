@@ -26,39 +26,42 @@ class ThreadController extends Controller
      * @param $category
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getAllThreads($cat)
+    public function getAllThreads(Request $request, $cat)
     {
         try {
 
-            // $threads = Thread::with(['User', 'Replies', 'likes','Category'])
+
+            // if($cat === 'all') {
+            //     $threads = Thread::with(['User', 'Replies', 'likes','Category'])
             //     ->where('isDraft', 0)
             //     ->latest()
-            //     ->where(function($q) use ($cat) {
-            //         if($cat !== 'all') {
-            //            $category = $this->getCategory($cat);
-            //            $q->
-            //         }
-            //     })
+            //     ->paginate(15);
 
-            if($cat === 'all') {
-                $threads = Thread::with(['User', 'Replies', 'likes','Category'])
-                ->where('isDraft', 0)
-                ->latest()
-                ->paginate(15);
+            // } else {
 
-            } else {
-
-                $category = Category::where('slug', '=', $cat)->get();
-                if ($category->isEmpty()) {
-                    return response()->json(['success' => false, 'category-slug' => $cat, 'msg' => 'No Threads'], 201);
-                }
+            //     $category = Category::where('slug', '=', $cat)->get();
+            //     if ($category->isEmpty()) {
+            //         return response()->json(['success' => false, 'category-slug' => $cat, 'msg' => 'No Threads'], 201);
+            //     }
     
-                $threads = Thread::with(['User', 'Replies', 'likes','Category'])
-                ->where('cat_id', $category[0]->id)
-                ->where('isDraft', 0)
-                ->latest()
-                ->paginate(15);
-            }
+            //     $threads = Thread::with(['User', 'Replies', 'likes','Category'])
+            //     ->where('cat_id', $category[0]->id)
+            //     ->where('isDraft', 0)
+            //     ->latest()
+            //     ->paginate(15);
+            // }
+
+            $category = Category::where('slug', '=', $cat)->get();
+            $threads = Thread::with(['User', 'Replies', 'likes','Category'])
+            ->where(function($q) use ($category) {
+                if ($category->isNotEmpty()) {
+                    $q->orWhere('cat_id', $category[0]->id);
+                }
+            })
+            ->where('isDraft', 0)
+            ->latest()
+            ->paginate(15);
+
 
             return ThreadResource::collection($threads);
 

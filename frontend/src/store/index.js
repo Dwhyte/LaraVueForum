@@ -11,7 +11,8 @@ export default new Vuex.Store({
         isLoading: false,
         threadData: null,
         categories: null,
-        singleThread: null
+        singleThread: null,
+        sortBy: null
     },
     getters: {
         loading(state) {
@@ -25,6 +26,9 @@ export default new Vuex.Store({
         },
         getSingleThread(state) {
             return state.singleThread;
+        },
+        getSortKeyword(state) {
+            return state.sortBy;
         }
     },
     mutations: {
@@ -40,6 +44,40 @@ export default new Vuex.Store({
         },
         SET_SINGLETHREAD(state, thread) {
             state.singleThread = thread;
+        },
+        SET_SORT(state, sortBy) {
+            state.sortBy = sortBy;
+        },
+
+        SORT_THREADS(state, sortBy) {
+            switch (sortBy) {
+                case "new":
+                    state.threadData.data = state.threadData.data.sort(
+                        (a, b) => a.created_at - b.created_at
+                    );
+                    state.sortBy = sortBy;
+                    console.log("sort by new");
+                    break;
+
+                case "most_active":
+                    state.threadData.data = state.threadData.data.sort(
+                        (a, b) => b.replies - a.replies
+                    );
+                    state.sortBy = sortBy;
+                    console.log("sort by most_active");
+                    break;
+
+                case "no_replies":
+                    state.threadData.data = state.threadData.data.sort(
+                        (a, b) => a.replies - b.replies
+                    );
+                    state.sortBy = sortBy;
+                    console.log("sort by no_replies");
+                    break;
+
+                default:
+                    break;
+            }
         }
     },
     actions: {
@@ -67,6 +105,11 @@ export default new Vuex.Store({
             } catch (e) {
                 console.log("oppsies ---> Get Threads Error:    " + e);
             }
+        },
+
+        // Set thread sort option
+        setSortOption({ commit }, sortBy) {
+            commit("SORT_THREADS", sortBy);
         },
 
         // Get single thread by :username and :slug

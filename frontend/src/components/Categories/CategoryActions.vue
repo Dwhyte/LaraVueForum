@@ -12,10 +12,7 @@
         <li class="mb-3" v-for="category in catData.data" :key="category.id">
           <button
             class="btn btn-link btn-outline-claim btn-sm text-uppercase font-weight-bold"
-            :class="{
-                            catActive:
-                                $route.path == `/threads/${category.slug}`
-                        }"
+            :class="{ catActive: $route.path == `/threads/${category.slug}`}"
             @click.prevent="updateNav(category.slug)"
           >{{ category.name }}</button>
         </li>

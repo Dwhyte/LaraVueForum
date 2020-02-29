@@ -41,6 +41,7 @@ class ThreadResource extends JsonResource
             'likes' => $this->Likes->count(),
             'replies' => $this->Replies->count(),
             "isNew" => $is_thread_new,
+            "created_at" => Carbon::parse($this->created_at)->format('d.m.y H:i:s'),
             'thread_created_on' => Carbon::parse($this->created_at)->format('M d'),
             'thread_updated_on' => $this->updated_at->diffForHumans()
         ];

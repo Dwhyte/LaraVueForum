@@ -92,6 +92,10 @@ export default {
   },
   mounted() {
     this.allThreads();
+    this.$root.$on("sortBy", type => {
+      console.log("you clicked on new");
+      this.sortByBlah(type);
+    });
   },
   watch: {
     $route: "allThreads"
@@ -107,10 +111,15 @@ export default {
   },
   methods: {
     ...mapActions({
-      getAllThreads: "GetThreads"
+      getAllThreads: "GetThreads",
+      sortBy: "setSortOption"
     }),
     allThreads() {
       this.getAllThreads(this.$route.params.category);
+    },
+    sortByBlah(type) {
+      this.sortBy(type);
+      // this.allThreads();
     }
   }
 };
