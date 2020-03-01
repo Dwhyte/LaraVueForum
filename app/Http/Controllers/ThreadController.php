@@ -26,10 +26,12 @@ class ThreadController extends Controller
      * @param $category
      * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
-    public function getAllThreads(Request $request, $cat)
+    public function getAllThreads($cat)
     {
         try {
-            $category = Category::where('slug', '=', $cat)->get();
+
+            $category = $this->getCategory($cat);
+
             $threads = Thread::with(['User', 'Replies', 'likes','Category'])
             ->where(function($q) use ($category) {
                 if ($category->isNotEmpty()) {
@@ -178,10 +180,11 @@ class ThreadController extends Controller
 
     private function getCategory($slug)
     {
-        $category = Category::where('slug', $slug)->get();
-        if ($category->isEmpty()) {
-            return response()->json(['success' => false, 'category-slug' => $slug, 'msg' => 'No Threads'], 201);
-        }
+        $category = Category::where('slug','=', $slug)->get();
+
+        // if ($category->isEmpty()) {
+        //     return response()->json(['success' => false, 'category-slug' => $slug, 'msg' => 'No Threads'], 201);
+        // }
         return $category;
     }
 
