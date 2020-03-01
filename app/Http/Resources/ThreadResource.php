@@ -23,7 +23,7 @@ class ThreadResource extends JsonResource
         // check if thread date is more than 24 hours old. set $is_thread_new to false.
         $is_thread_new = $thread_date <= $time ? false : true;
 
-        $skimmed_content = Str::limit($this->content, 75, '...'); // show 75 characters only
+        $skimmed_content = Str::limit($this->content, 150, '...'); // show 150 characters only
         $read_time = (new ReadTime($this->content))->get();
 
         // dd($this->Category);

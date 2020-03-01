@@ -1,17 +1,17 @@
 <template>
   <div>
-    <button
+    <i
       v-if="!saveThreadStatus"
-      class="small mb-2 btn btn-link thread-save-btn btn-sm text-uppercase font-weight-bold"
       style="float:right"
       @click="saveThisThread(threadID)"
-    >Save</button>
-    <button
+      class="far fa-bookmark"
+    ></i>
+    <i
       v-if="saveThreadStatus"
-      class="small mb-2 btn btn-link thread-saved btn-sm text-uppercase font-weight-bold"
       style="float:right"
       @click="removeThisThread(threadID)"
-    >Saved</button>
+      class="fas fa-bookmark"
+    ></i>
   </div>
 </template>
 
@@ -79,4 +79,20 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.fa-bookmark {
+  cursor: pointer;
+  font-size: 26px;
+  position: absolute;
+  right: 15px;
+  top: -8px;
+}
+
+.fa-bookmark:hover {
+  color: #536eec;
+}
+
+.fas.fa-bookmark {
+  color: #536eec;
+}
+</style>
