@@ -1,76 +1,12 @@
 <template>
   <div id="threads-section">
     <div class="mb-4">
-      <ul v-if="threads" class="list-unstyled">
-        <li class="threadblock-norm thread mb-4" v-for="thread in threads.data" :key="thread.id">
-          <div class="content-info-block">
-            <div class="thread-header row">
-              <div class="col-md-1" style="padding-right: 0;">
-                <AvatarIcon :user="thread.user"></AvatarIcon>
-              </div>
-              <div class="col-md-11">
-                <div class="content-title">
-                  <router-link
-                    :to="`/thread/${thread.user.username}/${thread.slug}`"
-                    class="font-weight-bold"
-                  >{{ thread.title }}</router-link>
-                  <ThreadSaveBtn
-                    v-if="user"
-                    :saved-threads="user.savedThreads"
-                    :thread-i-d="thread.id"
-                  ></ThreadSaveBtn>
-                </div>
-                <div class="thread-meta">
-                  <router-link
-                    :to="`/threads/${thread.category}`"
-                    class="btn btn-link btn-outline-claim btn-sm text-uppercase font-weight-bold catActive"
-                    v-bind:style="{
-                        color: `${thread.category_color}`,
-                        fontSize: `.6rem`,
-                        marginRight: `5px`,
-                        padding: `1px`
-                   }"
-                  >#{{ thread.category }}</router-link>|
-                  <span class="display-name">
-                    <router-link
-                      class="font-weight-bold"
-                      :to="`/u/${thread.user.username}`"
-                    >{{ thread.user.username }}</router-link>
-                  </span>
-                  <span class="display-date font-weight-bold">
-                    · {{ thread.thread_created_on }}
-                    <span
-                      v-if="thread.thread_created_on"
-                      class="time-ago"
-                      style="color: #596671;font-weight: 100;font-size: 11px;"
-                    >({{ thread.thread_updated_on }})</span>
-                  </span>
-                  <div style="margin-top: 8px;position: absolute;right: 17px;">
-                    <i class="fas fa-heart" style="color: #ec4141;" />
-                    {{ thread.likes }}
-                    <i
-                      class="far fa-comment-dots"
-                      style="margin-left: 16px;"
-                    />
-                    {{ thread.replies }}
-                  </div>
-                </div>
-                <div class="content" style="font-size: 15px;width: 650px;margin-bottom: 15px;">
-                  <p style="margin: 0;" v-html="`${thread.skimmed_content}`"></p>
-                </div>
-
-                <div class="bottom" style="width:100%">
-                  <!-- <router-link v-if="!user" to="/signin" style="float:right">
-                    <button
-                      class="small mb-2 btn btn-link thread-save-btn btn-sm text-uppercase font-weight-bold"
-                    >Save</button>
-                  </router-link>-->
-                </div>
-              </div>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <thread-component :threads="threads" :user="user"></thread-component>
+      <div v-if="loading" class="text-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
       <div v-if="!threads">
         <h4 class="text-center">No exists for this category</h4>
       </div>
@@ -81,13 +17,10 @@
 // import ThreadDisplayPlaceholder from "./ThreadDisplayPlaceholder";
 // import { ContentLoader } from "vue-content-loader";
 import { mapGetters, mapActions } from "vuex";
-import ThreadSaveBtn from "@/components/Threads/ThreadSaveBtn";
-import AvatarIcon from "@/components/AvatarIcon";
+import ThreadComponent from "@/components/Threads/ThreadComponent";
 export default {
-  // props: ["threads"],
   components: {
-    ThreadSaveBtn,
-    AvatarIcon
+    ThreadComponent
   },
   data() {
     return {};
@@ -95,7 +28,6 @@ export default {
   mounted() {
     this.allThreads();
     this.$root.$on("sortBy", type => {
-      console.log("you clicked on new");
       this.sortByBlah(type);
     });
   },
@@ -104,12 +36,10 @@ export default {
   },
   computed: {
     ...mapGetters({
+      loading: "loading",
       user: "auth/user",
       threads: "getThreads"
-    }),
-    loading() {
-      return this.$store.state.isLoading;
-    }
+    })
   },
   methods: {
     ...mapActions({
@@ -121,7 +51,6 @@ export default {
     },
     sortByBlah(type) {
       this.sortBy(type);
-      // this.allThreads();
     }
   }
 };

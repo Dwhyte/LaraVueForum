@@ -29,28 +29,6 @@ class ThreadController extends Controller
     public function getAllThreads(Request $request, $cat)
     {
         try {
-
-
-            // if($cat === 'all') {
-            //     $threads = Thread::with(['User', 'Replies', 'likes','Category'])
-            //     ->where('isDraft', 0)
-            //     ->latest()
-            //     ->paginate(15);
-
-            // } else {
-
-            //     $category = Category::where('slug', '=', $cat)->get();
-            //     if ($category->isEmpty()) {
-            //         return response()->json(['success' => false, 'category-slug' => $cat, 'msg' => 'No Threads'], 201);
-            //     }
-    
-            //     $threads = Thread::with(['User', 'Replies', 'likes','Category'])
-            //     ->where('cat_id', $category[0]->id)
-            //     ->where('isDraft', 0)
-            //     ->latest()
-            //     ->paginate(15);
-            // }
-
             $category = Category::where('slug', '=', $cat)->get();
             $threads = Thread::with(['User', 'Replies', 'likes','Category'])
             ->where(function($q) use ($category) {
@@ -143,7 +121,7 @@ class ThreadController extends Controller
             $thread->content = $request->thread_content;
             $thread->isDraft = $request->isDraft;
 
-            if($featured_image->isNotEmpty()){
+            if(!empty($featured_image)){
                 try {
                     // upload new featured image
                         $featured_image_upload = $featured_image;
