@@ -55,27 +55,16 @@
                                     >({{ thread.thread_updated_on }})</span
                                 >
                             </span>
-                            <div
-                                style="margin-top: 8px;position: absolute;right: 17px;font-size: 17px;"
-                            >
-                                <i
-                                    class="fas fa-heart"
-                                    style="color: #ec4141;"
-                                />
+                            <div class="thread-stats">
+                                <i class="fas fa-heart" />
                                 {{ thread.likes }}
-                                <i
-                                    class="far fa-comment-dots"
-                                    style="margin-left: 16px;"
-                                />
+                                <i class="far fa-comment-dots" />
                                 {{ thread.replies }}
                             </div>
                         </div>
-                        <div
-                            class="content"
-                            style="font-size: 15px;width: 71%;margin-bottom: 15px;"
-                        >
+                        <div class="thread-content">
                             <p
-                                style="margin: 0;"
+                                class="m-0"
                                 v-html="`${thread.skimmed_content}`"
                             ></p>
                         </div>
@@ -145,6 +134,16 @@ export default {
     /* min-height: 184px; */
 }
 
+.content-title a:hover {
+    color: #468cca;
+}
+
+.thread-content {
+    font-size: 15px;
+    width: 71%;
+    margin-bottom: 15px;
+}
+
 .thread-title a {
     text-transform: capitalize;
 }
@@ -163,6 +162,26 @@ export default {
     font-size: 13px;
     /* float: right; */
     margin-bottom: 15px;
+}
+
+.thread-meta .display-name a:hover {
+    text-decoration: none;
+    color: #468cca;
+}
+
+.thread-stats {
+    margin-top: 8px;
+    position: absolute;
+    right: 17px;
+    font-size: 17px;
+}
+
+.thread-stats .fas.fa-heart {
+    color: #ec4141;
+}
+
+.thread-stats .far.fa-comment-dots {
+    margin-left: 16px;
 }
 
 .thread-avatar {
