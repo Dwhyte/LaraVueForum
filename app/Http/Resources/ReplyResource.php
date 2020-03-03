@@ -14,14 +14,11 @@ class ReplyResource extends JsonResource
      */
     public function toArray($request)
     {
-        $avatar = $this->User->avatar ? ''.env('CLOUDINARY_FULL_AVATAR_PATH').''.$this->User->avatar .'' : null;
-
         return [
             'id' => $this->id,
+            'parent_id' => $this->parent_id,
             'reply' => $this->body,
-            'user' => $this->User->username,
-            'user_id' => $this->User->id,
-            'user_avatar' => $avatar,
+            'user' => new UserResource($this->User),
             'thread_slug' => $this->Thread->slug,
             'like_count' => $this->Likes->count(),
             'Liked' => !!$this->Likes->where('user_id', auth()->id())->count(),

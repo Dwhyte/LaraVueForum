@@ -17,7 +17,7 @@ class SingleThreadResource extends JsonResource
     public function toArray($request)
     {
         $read_time = (new ReadTime($this->content))->get();
-        $featured_image = $this->featured_image ? ''.env('CLOUDINARY_THREAD_FEATURED_IMAGE_PATH').''.$this->featured_image .'' : null;
+        $featured_image = $this->featured_image ? ''.env('CLOUDINARY_FULL_FEATURED_IMAGE_PATH').''.$this->featured_image .'' : null;
         $category = [
             'id' => $this->Category->id,
             'name' => $this->Category->name,
@@ -26,8 +26,7 @@ class SingleThreadResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'user' => $this->User->username,
-            'user_id' => $this->User->id,
+            'user' => new UserResource($this->User),
             'category' => $category,
             'read_time' => $read_time,
             'title' => $this->title,

@@ -8,8 +8,8 @@ import VueAxios from "vue-axios";
 import Meta from "vue-meta";
 import VueFlashMessage from "vue-flash-message";
 require("vue-flash-message/dist/vue-flash-message.min.css");
-
-import CKEditor from "@ckeditor/ckeditor5-vue";
+import wysiwyg from "vue-wysiwyg";
+import "vue-wysiwyg/dist/vueWysiwyg.css";
 
 Vue.config.productionTip = false;
 
@@ -27,8 +27,9 @@ Vue.use(require("vue-moment"));
 Vue.use(Meta);
 Vue.use(VueAxios, axios);
 Vue.use(VueFlashMessage);
-Vue.use(CKEditor);
-
+Vue.use(wysiwyg, {
+    minHeight: "350px"
+});
 // const vueBodyClass = new vbclass(router);
 // router.beforeEach((to, from, next) => {
 //     vueBodyClass.guard(to, next);

@@ -81,11 +81,7 @@
                             </div>
                         </form>
                     </div>
-                    <ckeditor
-                        :editor="editor"
-                        v-model="editorData"
-                        :config="editorConfig"
-                    ></ckeditor>
+                    <wysiwyg v-model="editorData" />
                     <div class="save-area">
                         <div style="display: inline-block;">
                             <button
@@ -117,7 +113,6 @@
 </template>
 <script>
 import { mapGetters, mapActions } from "vuex";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 export default {
     name: "newThread",
     data() {
@@ -126,11 +121,7 @@ export default {
             selectedCategory: "Select a category",
             isDraft: 0,
             errors: null,
-            editor: ClassicEditor,
             editorData: "<p>Write something amazing!</p>",
-            editorConfig: {
-                // The configuration of the editor.
-            },
             featured_image: null
         };
     },
@@ -166,7 +157,10 @@ export default {
                     // this.flashSuccess(res.data.message);
                     this.flash(res.data.message, "info flash__message");
                     // console.log(res.data);
-                    this.clearEditPost();
+                    this.title = null;
+                    this.selectedCategory = "Select a category";
+                    this.editorData = "";
+                    this.isDraft = 0;
                 })
                 .catch(error => {
                     this.errors = error.response.data;
@@ -208,7 +202,7 @@ export default {
     background: #fff;
 }
 
-.ck.ck-editor__main > .ck-editor__editable {
-    min-height: 500px;
+#newpost .editr--content {
+    min-height: 350px;
 }
 </style>
