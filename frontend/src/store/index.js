@@ -93,7 +93,7 @@ export default new Vuex.Store({
         },
 
         // Get all threads by category
-        async GetThreads({ commit }, category) {
+        async GetThreads({ commit, dispatch }, category) {
             try {
                 commit("SET_LOADER", true);
                 const response = await axios.get(`/api/thread/${category}`);
@@ -101,6 +101,10 @@ export default new Vuex.Store({
                 if (response) {
                     commit("SET_LOADER", false);
                     commit("SET_THREADS", response.data);
+                }
+
+                if (this.state.sortBy) {
+                    dispatch("setSortOption", this.state.sortBy);
                 }
             } catch (e) {
                 console.log("oppsies ---> Get Threads Error:    " + e);

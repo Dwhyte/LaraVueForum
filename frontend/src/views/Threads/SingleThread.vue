@@ -2,7 +2,7 @@
   <div id="singleThread">
     <div class="container">
       <div class="row">
-        <div class="col-lg-10 offset-lg-1">
+        <div class="col-lg-12">
           <div class="loading" v-if="isLoading">Loading...</div>
           <div class="thread-container" v-if="threadData">
             <div v-for="thread in threadData" :key="thread.id">
@@ -145,5 +145,19 @@ export default {
 
 .moveLeft {
   margin-left: 40px;
+}
+
+@media (max-width: 500px) {
+  #singleThread > .container > .row > .col-lg-12 {
+    padding: 0;
+  }
+
+  #singleThread .main-content > h1 {
+    font-size: 28px;
+  }
+
+  .editr--toolbar {
+    overflow: hidden;
+  }
 }
 </style>
